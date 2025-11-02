@@ -1,0 +1,38 @@
+- Create an Ec2 machine 
+
+- Update & Install Dependencies
+sudo yum update -y
+sudo yum install python3 python3-pip zip -y
+
+- Check version
+python3 --version
+pip3 --version
+
+- Create a Working Directory
+mkdir pandas-layer
+cd pandas-layer
+	
+- Install pandas to a python folder
+layer.zip
+└── python/
+    ├── pandas/
+    ├── numpy/
+    ├── ...
+
+
+- Run this command
+pip3 install pandas -t python/
+
+- Zip the Folder
+zip -r9 pandas-layer.zip python
+
+- AWS CLI (direct from EC2)
+If you have AWS CLI configured (aws configure), run:
+aws lambda publish-layer-version \
+  --layer-name pandas-layer \
+  --description "Pandas layer for Lambda" \
+  --zip-file fileb://pandas-layer.zip \
+  --compatible-runtimes python3.9
+  
+- Attach Layer to Your Lambda Function
+Lambda → Your Function → Configuration → Layers → Add a Layer → Custom layers
